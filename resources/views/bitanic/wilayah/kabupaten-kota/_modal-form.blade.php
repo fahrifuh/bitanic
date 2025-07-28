@@ -1,0 +1,43 @@
+<!-- Modal -->
+<div class="modal fade" id="modalForm" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalFormTitle">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @csrf
+                <input type="hidden" name="id" id="data-input-id">
+                <div class="row">
+                    <div class="col mb-3">
+                        <label for="data-input-city-name" class="form-label">Nama Kabupaten/Kota</label>
+                        <input type="text" id="data-input-city-name" class="form-control" name="city_name"
+                            required />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col mb-3">
+                        <label for="data-input-province-id" class="form-label">Provinsi</label>
+                        <br>
+                        <select class="form-select" id="data-input-province-id" name="province_id"
+                            aria-label="Default select example">
+                            <option value="">Pilih Provinsi</option>
+                            @forelse ($provinces as $id => $prov_name)
+                                <option value="{{ $id }}">{{ $prov_name }}</option>
+                            @empty
+                                <option value="" disabled>Tidak ada data</option>
+                            @endforelse
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                    Tutup
+                </button>
+                <button type="button" class="btn btn-primary" id="submit-btn">Simpan</button>
+            </div>
+        </div>
+    </div>
+</div>

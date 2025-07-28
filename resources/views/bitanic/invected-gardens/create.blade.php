@@ -1,0 +1,98 @@
+<x-app-layout>
+
+    @push('styles')
+        <style>
+            .preview-image {
+                width: 100%;
+                /* Adjust the width as desired */
+                object-fit: cover;
+                aspect-ratio: 3/1;
+                border: 1px solid #9f999975;
+            }
+
+            @media (max-width: 600px) {
+                .preview-image {
+                    width: calc(100% - 10px);
+                }
+            }
+        </style>
+    @endpush
+    {{-- Header --}}
+    <x-slot name="header">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Master / <a
+                    href="{{ route('bitanic.member.index') }}">Member</a> /</span> Buat data baru</h4>
+    </x-slot>
+    {{-- End Header --}}
+
+    @if (session()->has('success'))
+        <x-alert-message class="alert-success">{{ session()->get('success') }}</x-alert-message>
+    @endif
+
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Striped Rows -->
+            <div class="card">
+                <div class="card-body">
+                    <form action="{{ route('bitanic.member.store') }}" method="POST" id="form-member">
+                        @csrf
+                        <!-- Validation Errors -->
+                        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+
+                        <div class="row g-2">
+                            <div class="col-12">
+                                <div class="bg-info text-white p-3 rounded" role="alert">
+                                    <ul>
+                                        <li class="d-none" id="alert">Foto <b>TIDAK WAJIB</b> diisi!</li>
+                                        <li>Jika hama yang anda cari tidak ada, silahkan isi field nama hama dan pastikan anda tidak memilih hama yang tersedia.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <label for="data-input-name" class="form-label">Nama</label>
+                                <input type="text" id="data-input-name" class="form-control" name="name"
+                                    value="{{ old('name') }}" required />
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <label for="data-input-max-comodities" class="form-label">Jumlah Komoditas</label>
+                                <input type="number" min="0" id="data-input-max-comodities" class="form-control"
+                                    name="max_commodities" value="{{ old('max_commodities') }}" required />
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <label for="data-input-fee" class="form-label">Harga</label>
+                                <input type="number" min="0" id="data-input-fee" class="form-control"
+                                    name="fee" value="{{ old('fee') }}" required />
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <label for="" class="form-label">Foto</label>
+                                <img src="{{ asset('bitanic-landing/default-image.jpg') }}" alt="preview-img"
+                                    class="preview-image img-thumbnail">
+                            </div>
+                            <div class="col-12 col-md-9 mb-3">
+                                <label for="data-input-image" class="form-label">File Foto</label>
+                                <input class="form-control" type="file" id="data-input-image" name="image"
+                                    accept="image/png, image/jpg, image/jpeg" aria-describedby="pictureHelp" />
+                                <div id="pictureHelp" class="form-text">Format gambar JPG, JPEG, PNG. Maks.
+                                    2MB</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button type="submit" class="btn btn-primary w-100" id="submit-btn">Simpan</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--/ Striped Rows -->
+        </div>
+    </div>
+
+    @push('scripts')
+        <script src="{{ asset('theme/js/ui-popover.js') }}"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                console.log("Hello World!")
+            })
+        </script>
+    @endpush
+</x-app-layout>
